@@ -1,12 +1,11 @@
-import DarkModeToggle from "./components/DarkModeToggle"
+import Header from "./components/Header";
 
 function App() {
-
   return (
     <div>
-      <DarkModeToggle />
+      <Header />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

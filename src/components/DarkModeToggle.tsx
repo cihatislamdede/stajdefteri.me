@@ -13,7 +13,7 @@ const DarkModeToggle = () => {
   }, [darkMode]);
 
   return (
-    <div className="flex items-center justify-center mt-1">
+    <div className="flex items-center justify-center">
       <button
         className="flex items-center justify-center w-10 h-10 p-3 rounded-full bg-gray-200 dark:bg-gray-800"
         onClick={() => setDarkMode(!darkMode)}
