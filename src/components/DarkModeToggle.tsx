@@ -5,18 +5,30 @@ const DarkModeToggle = () => {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      document.documentElement.classList.add(savedTheme);
+      setDarkMode(savedTheme === "dark");
     } else {
-      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      document.documentElement.classList.add("light");
     }
-  }, [darkMode]);
+  }, []);
 
   return (
     <div className="flex items-center justify-center">
       <button
-        className="flex items-center justify-center w-10 h-10 p-3 rounded-full bg-gray-200 dark:bg-gray-800"
-        onClick={() => setDarkMode(!darkMode)}
+        className="flex items-center justify-center w-10 h-10 p-3 rounded-full"
+        onClick={() => {
+          if (darkMode) {
+            document.documentElement.classList.replace("dark", "light");
+            localStorage.setItem("theme", "light");
+          } else {
+            document.documentElement.classList.replace("light", "dark");
+            localStorage.setItem("theme", "dark");
+          }
+          setDarkMode(!darkMode);
+        }}
       >
         {darkMode ? (
           <HiSun className="w-4 h-4 text-yellow-500" />
