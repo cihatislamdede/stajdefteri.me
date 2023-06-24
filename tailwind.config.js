@@ -8,10 +8,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        "dark-bg": "#1B262C",
-        "dark-bg-light": "#0F4C75",
-        "light-bg": "#3282B8",
-        "light-bg-dark": "#BBE1FA",
+        "dark-bg": "#222831",
+        "dark-bg-light": "#393E46",
+        "light-bg": "#EEEEEE",
+        "light-bg-dark": "#FFD369",
       },
     },
   },

@@ -15,7 +15,10 @@ const Footer = () => {
             <FaGithub className="mr-2" />
             <span className="text-sm">Open Source</span>
           </a>
-          <Link to="/about" className="mt-2 text-center text-sm text-gray-500 dark:text-gray-400 lg:mt-0 lg:text-right hover:text-gray-400 transition-all">
+          <Link
+            to="/about"
+            className="mt-2 text-center text-sm text-gray-500 dark:text-gray-400 lg:mt-0 lg:text-right hover:text-gray-400 transition-all"
+          >
             About
           </Link>
         </div>
