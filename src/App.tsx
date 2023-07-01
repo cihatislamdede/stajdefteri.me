@@ -4,7 +4,6 @@ import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer } from "react-toastify";
 import Home from "./pages/Home";
-import About from "./pages/About";
 
 function App() {
   return (
@@ -24,7 +23,6 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
         </Routes>
         <Footer />
       </Router>

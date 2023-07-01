@@ -1,5 +1,4 @@
 import { FaGithub } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -13,14 +12,8 @@ const Footer = () => {
             className="flex items-center justify-center hover:text-gray-400 transition-all"
           >
             <FaGithub className="mr-2" />
-            <span className="text-sm">Open Source</span>
+            <span className="text-sm">Açık Kaynak</span>
           </a>
-          <Link
-            to="/about"
-            className="mt-2 text-center text-sm text-gray-500 dark:text-gray-400 lg:mt-0 lg:text-right hover:text-gray-400 transition-all"
-          >
-            About
-          </Link>
         </div>
       </div>
     </footer>
