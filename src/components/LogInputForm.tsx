@@ -23,14 +23,8 @@ const LogInputForm = () => {
       } else {
         localStorage.setItem("logs", JSON.stringify([log]));
       }
+      window.location.reload();
       toast.success("Kayıt başarıyla eklendi.");
-      setLog({
-        id: 0,
-        section: "",
-        title: "",
-        date: "",
-        content: "",
-      });
     } else {
       toast.info("Lütfen tüm alanları doldurun.");
     }
