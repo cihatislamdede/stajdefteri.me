@@ -9,21 +9,33 @@ const LogInputForm = () => {
   const addLog = useLogStore((state) => state.addLog);
   const updateLog = useLogStore((state) => state.updateLog);
   const logs = useLogStore((state) => state.logs);
+
   const saveLog = () => {
     if (log.section && log.title && log.date && log.content) {
       if (logs.length > 0) {
         const update = log.id != 0;
+        const today = new Date(log.date);
+        const isDayHasLog = logs.some(
+          (l) =>
+            new Date(l.date).getDate() === today.getDate() && l.id !== log.id
+        );
+        if (isDayHasLog) {
+          toast.info("Bu tarihe ait kayıt zaten mevcut.");
+          return;
+        }
         if (update) {
           updateLog(log);
+          toast.success("Kayıt başarıyla güncellendi.");
         } else {
           log.id = logs[logs.length - 1].id + 1;
           addLog(log);
+          toast.success("Kayıt başarıyla eklendi.");
         }
       } else {
         log.id = 1;
         addLog(log);
+        toast.success("Kayıt başarıyla eklendi.");
       }
-      toast.success("Kayıt başarıyla eklendi.");
       clearCurrentLog();
     } else {
       toast.info("Lütfen tüm alanları doldurun.");
@@ -82,11 +94,19 @@ const LogInputForm = () => {
       </div>
       <div className="flex justify-end">
         <button
-          onClick={saveLog}
+          onClick={() => saveLog()}
           className="uppercase text-sm font-bold tracking-wide bg-blue-900 dark:bg-blue-800 text-gray-100 px-4 py-2 rounded-lg focus:outline-none focus:shadow-outline"
         >
-          Kaydet
+          {log.id === 0 ? "Kaydet" : "Güncelle"}
         </button>
+        {log.id !== 0 && (
+          <button
+            onClick={() => clearCurrentLog()}
+            className="uppercase text-sm font-bold tracking-wide bg-red-900 dark:bg-red-800 text-gray-100 px-4 py-2 rounded-lg focus:outline-none focus:shadow-outline ml-2"
+          >
+            İptal
+          </button>
+        )}
       </div>
     </div>
   );

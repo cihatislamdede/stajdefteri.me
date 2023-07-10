@@ -38,7 +38,13 @@ const LogCard = ({ log }: { log: Log }) => {
       <div className="flex justify-end items-center mt-4">
         <button
           className="group relative inline-block text-slate-700 underline hover:text-blue-700 duration-300 mr-4"
-          onClick={update}
+          onClick={() => {
+            update();
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          }}
         >
           <AiFillEdit className="text-xl" />
           <span className="opacity-0 group-hover:opacity-100 absolute -top-8 -left-5 bg-blue-500 text-white px-2 py-1 rounded-md text-xs duration-300">
