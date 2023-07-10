@@ -1,17 +1,10 @@
-import { useEffect, useState } from "react";
 import LogInputForm from "../components/LogInputForm";
-import { Log } from "../types";
+import { useLogStore } from "../stores/logStore";
 import LogCard from "../components/LogCard";
 
 const Home = () => {
-  const [logs, setLogs] = useState<Log[]>([]);
 
-  useEffect(() => {
-    const logs = localStorage.getItem("logs");
-    if (logs) {
-      setLogs(JSON.parse(logs));
-    }
-  }, []);
+  const logs = useLogStore((state) => state.logs); 
 
   return (
     <div className="flex-grow container mx-auto">
