@@ -2,27 +2,21 @@ import { useState } from "react";
 import { Log } from "../types";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { toast } from "react-toastify";
+import { useCurrentLogStore, useLogStore } from "../stores/logStore";
 
 const LogCard = ({ log }: { log: Log }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const editLog = () => {
-    console.log("edit log");
+  const deleteLogState = useLogStore((state) => state.deleteLog);
+  const setCurrentLog = useCurrentLogStore((state) => state.setCurrentLog);
+
+  const update = () => {
+    setCurrentLog(log);
   };
 
   const deleteLog = () => {
-    const logs = localStorage.getItem("logs");
-    if (logs) {
-      const parsedLogs = JSON.parse(logs);
-      const index = parsedLogs.findIndex((l: Log) => l.id === log.id);
-      parsedLogs.splice(index, 1);
-      localStorage.setItem("logs", JSON.stringify(parsedLogs));
-      setIsDeleteModalOpen(false);
-      window.location.reload();
-      toast.success("Kayıt başarıyla silindi.");
-    } else {
-      console.log("no logs found");
-    }
+    deleteLogState(log.id);
+    toast.success("Kayıt başarıyla silindi.");
   };
 
   return (
@@ -44,7 +38,7 @@ const LogCard = ({ log }: { log: Log }) => {
       <div className="flex justify-end items-center mt-4">
         <button
           className="group relative inline-block text-slate-700 underline hover:text-blue-700 duration-300 mr-4"
-          onClick={editLog}
+          onClick={update}
         >
           <AiFillEdit className="text-xl" />
           <span className="opacity-0 group-hover:opacity-100 absolute -top-8 -left-5 bg-blue-500 text-white px-2 py-1 rounded-md text-xs duration-300">

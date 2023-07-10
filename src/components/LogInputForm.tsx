@@ -1,30 +1,30 @@
-import { useState } from "react";
-import { Log } from "../types";
 import { toast } from "react-toastify";
+import { useLogStore, useCurrentLogStore } from "../stores/logStore";
 
 const LogInputForm = () => {
-  const [log, setLog] = useState<Log>({
-    id: 0,
-    section: "",
-    title: "",
-    date: "",
-    content: "",
-  });
+  const log = useCurrentLogStore((state) => state.currentLog);
+  const setLog = useCurrentLogStore((state) => state.setCurrentLog);
+  const clearCurrentLog = useCurrentLogStore((state) => state.clearCurrentLog);
 
+  const addLog = useLogStore((state) => state.addLog);
+  const updateLog = useLogStore((state) => state.updateLog);
+  const logs = useLogStore((state) => state.logs);
   const saveLog = () => {
     if (log.section && log.title && log.date && log.content) {
-      const logs = localStorage.getItem("logs");
-      if (logs) {
-        const parsedLogs = JSON.parse(logs);
-        // last id + 1
-        log.id = parsedLogs[parsedLogs.length - 1].id + 1;
-        parsedLogs.push(log);
-        localStorage.setItem("logs", JSON.stringify(parsedLogs));
+      if (logs.length > 0) {
+        const update = log.id != 0;
+        if (update) {
+          updateLog(log);
+        } else {
+          log.id = logs[logs.length - 1].id + 1;
+          addLog(log);
+        }
       } else {
-        localStorage.setItem("logs", JSON.stringify([log]));
+        log.id = 1;
+        addLog(log);
       }
-      window.location.reload();
       toast.success("Kayıt başarıyla eklendi.");
+      clearCurrentLog();
     } else {
       toast.info("Lütfen tüm alanları doldurun.");
     }
@@ -42,6 +42,7 @@ const LogInputForm = () => {
             id="section"
             placeholder="Örn: Firma Tanıtımı, Yazılım"
             onChange={(e) => setLog({ ...log, section: e.target.value })}
+            value={log.section}
           />
         </div>
         <div>
@@ -54,6 +55,7 @@ const LogInputForm = () => {
             id="title"
             placeholder="Örn: Form Tasarımı"
             onChange={(e) => setLog({ ...log, title: e.target.value })}
+            value={log.title}
           />
         </div>
         <div>
@@ -64,6 +66,7 @@ const LogInputForm = () => {
             placeholder="Date"
             id="date"
             onChange={(e) => setLog({ ...log, date: e.target.value })}
+            value={log.date}
           />
         </div>
       </div>
@@ -74,6 +77,7 @@ const LogInputForm = () => {
           rows={4}
           className="w-full bg-gray-100 p-3 rounded-lg focus:outline-none focus:shadow-outline placeholder:text-sm text-black/90"
           onChange={(e) => setLog({ ...log, content: e.target.value })}
+          value={log.content}
         ></textarea>
       </div>
       <div className="flex justify-end">
